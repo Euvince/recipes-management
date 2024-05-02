@@ -1,0 +1,65 @@
+{% extends 'admin/admin.html.twig' %}
+
+{% block title %}Listing des recettes!{% endblock %}
+
+{% block body %}
+
+    <p>
+        <a class="btn btn-primary" style="text-decoration: none;" href="{{ url('admin.recipes.create') }}">Ajouter une recette</a>
+    </p>
+
+    <table class="table">
+        <thead>
+            <tr>
+                {# <th>{{ knp_pagination_sortable(recipes, 'ID', 'r.id') }}</th>
+                <th>{{ knp_pagination_sortable(recipes, 'Titre', 'r.title') }}</th> #}
+                <th>Id</th>
+                <th>Titre</th>
+                <th>Catégorie</th>
+                <th>Durée(minutes)</th>
+                <th style="width: 200px;">Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for recipe in recipes %}
+                <tr>
+                    <td>{{ recipe.id }}</td>
+                    <td>
+                        <a style="text-decoration: none;" href="{{ url('admin.recipes.show', {'slug' : recipe.slug, 'recipe' : recipe.id}) }}">{{ recipe.title }}</a>
+                    </td>
+                    <td>{{ recipe.category.name }}</td>
+                    <td>{{ recipe.duration }}</td>
+                    <td>
+                        <div class="d-flex gap-1">
+                            <a class="btn btn-primary btn-sm" style="text-decoration: none;" href="{{ url('admin.recipes.edit', {'slug' : recipe.slug, 'recipe' : recipe.id}) }}">Éditer</a>
+                            <a class="btn btn-danger btn-sm" style="text-decoration: none;" href="" data-bs-target="#modal{{ recipe.id }}" data-bs-toggle="modal">Supprimer</a>
+                        </div>
+                    </td>
+                </tr>
+                <div class="modal fade" tabindex="-1" id="modal{{ recipe.id }}">
+                    <div class="modal-dialog modal-dialog-centered">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title">Supprimer une recette</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                <p>Souhaitez-vous vraiment supprimer cette recette ?</p>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-primary btn-sm" data-bs-dismiss="modal">Annuler</button>
+                                <form action="{{ url('admin.recipes.delete', {'slug' : recipe.slug, 'recipe' : recipe.id}) }}" method="POST">
+                                    <input type="hidden" name="_method" value="DELETE">
+                                    <button class="btn btn-danger btn-sm" href="">Supprimer</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    {{ knp_pagination_render(recipes) }}
+
+{% endblock %}

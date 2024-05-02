@@ -1,0 +1,14 @@
+{% extends 'admin/admin.html.twig' %}
+
+{% block title %} Édition de la catégorie {{ category.id }} {% endblock %}
+
+{% block body %} 
+    <h1>Éditer une catégorie</h1> <br>
+    {{ form_start(form) }}
+        <div class="row d-flex">
+            <div class="col">{{ form_row(form.name) }}</div>
+            <div class="col">{{ form_row(form.slug) }}</div>
+        </div>
+        {{ form_rest(form) }}
+    {{ form_end(form) }}
+{% endblock %}

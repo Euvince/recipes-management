@@ -1,0 +1,59 @@
+{% extends 'admin/admin.html.twig' %}
+
+{% block title %}Listing des catégories!{% endblock %}
+
+{% block body %}
+
+    <p>
+        <a class="btn btn-primary" style="text-decoration: none;" href="{{ url('admin.categories.create') }}">Ajouter une catégorie</a>
+    </p>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Nom</th>
+                <th>Recettes</th>
+                <th style="width: 200px;">Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for category in categories %}
+                <tr>
+                    <td>{{ category.id }}</td>
+                    <td>
+                        <a style="text-decoration: none;" href="{{ url('admin.categories.show', {'slug' : category.slug, 'category' : category.id}) }}">{{ category.name }}</a>
+                    </td>
+                    <td>{{ category.recipes.count() }}</td>
+                    <td>
+                        <div class="d-flex gap-1">
+                            <a class="btn btn-primary btn-sm" style="text-decoration: none;" href="{{ url('admin.categories.edit', {'slug' : category.slug, 'category' : category.id}) }}">Éditer</a>
+                            <a class="btn btn-danger btn-sm" style="text-decoration: none;" href="" data-bs-target="#modal{{ category.id }}" data-bs-toggle="modal">Supprimer</a>
+                        </div>
+                    </td>
+                </tr>
+                <div class="modal fade" tabindex="-1" id="modal{{ category.id }}">
+                    <div class="modal-dialog modal-dialog-centered">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title">Supprimer une catégorie</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                <p>Souhaitez-vous vraiment supprimer cette catégorie ?</p>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-primary btn-sm" data-bs-dismiss="modal">Annuler</button>
+                                <form action="{{ url('admin.categories.delete', {'slug' : category.slug, 'category' : category.id}) }}" method="POST">
+                                    <input type="hidden" name="_method" value="DELETE">
+                                    <button class="btn btn-danger btn-sm" href="">Supprimer</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </tbody>
+    </table>
+
+{% endblock %}

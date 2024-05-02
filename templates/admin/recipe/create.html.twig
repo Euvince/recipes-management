@@ -1,0 +1,15 @@
+{% extends 'admin/admin.html.twig' %}
+
+{% block title %} Création de recette {% endblock %}
+
+{% block body %} 
+    <h1>Créer une recette</h1> <br>
+    {{ form_start(form) }}
+        <div class="row d-flex">
+            <div class="col-4">{{ form_row(form.title) }}</div>
+            <div class="col-4">{{ form_row(form.slug) }}</div>
+            <div class="col-4">{{ form_row(form.duration) }}</div>
+        </div>
+        {{ form_rest(form) }}
+    {{ form_end(form) }}
+{% endblock %}

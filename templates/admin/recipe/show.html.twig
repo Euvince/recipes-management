@@ -1,0 +1,26 @@
+{% extends 'admin/admin.html.twig' %}
+
+{% block title %} Recette : {{ recipe.id }} {% endblock %}
+
+{% block body %} 
+    <h1>Informations sur la recette : {{ recipe.title }}</h1> <br>
+    <p>
+        <strong>Catégorie : </strong> {{ recipe.category.name }}
+    </p>
+    <p>
+        <strong>Titre : </strong> {{ recipe.title }}
+    </p>
+    <p>
+        <strong>Slug : </strong> {{ recipe.slug }}
+    </p>
+    <p>
+        <strong>Durée : </strong> {{ recipe.duration }}minutes
+    </p>
+    <p>
+        <img src="{{ vich_uploader_asset(recipe, 'thumbnailFile') }}" height="400px" width="400px" alt="Image de la recette {{ recipe.title }}">
+    </p>
+    <p>
+        <strong>Contenu : </strong> <br>
+        {{ recipe.content | nl2br }}
+    </p>
+{% endblock %}
